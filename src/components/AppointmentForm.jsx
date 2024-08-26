@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const AppointmentForm = () => {
@@ -42,7 +43,24 @@ const AppointmentForm = () => {
   }, []);
 
   const handleAppointment = async (e) => {
-    e.preventDefaut();
+    e.preventDefault();
+
+    const today = new Date();
+    const selectedAppointmentDate = new Date(appointmentDate);
+    const selectedDob = new Date(dob);
+
+    // Validate Appointment Date
+    if (selectedAppointmentDate < today) {
+      toast.error("Appointment date cannot be in the past.");
+      return;
+    }
+
+    // Validate Date of Birth
+    if (selectedDob > today) {
+      toast.error("Date of birth cannot be in the future.");
+      return;
+    }
+
     try {
       const hasVisitedBool = Boolean(hasVisited);
       const { data } = await axios.post(
@@ -123,6 +141,7 @@ const AppointmentForm = () => {
               placeholder="Date of Birth"
               value={dob}
               onChange={(e) => setDob(e.target.value)}
+              max={new Date().toISOString().split("T")[0]} // Prevent future DOB
             />
           </div>
           <div>
@@ -136,6 +155,7 @@ const AppointmentForm = () => {
               placeholder="Appointment Date"
               value={appointmentDate}
               onChange={(e) => setAppointmentDate(e.target.value)}
+              min={new Date().toISOString().split("T")[0]} // Prevent past appointment date
             />
           </div>
           <div>
@@ -147,6 +167,7 @@ const AppointmentForm = () => {
                 setDoctorLastName("");
               }}
             >
+              <option value="">Select Department</option>
               {departmentsArray.map((depart, index) => {
                 return (
                   <option value={depart} key={index}>
@@ -167,7 +188,6 @@ const AppointmentForm = () => {
               <option value="">Select Doctor</option>
               {doctors
                 ?.filter((doctor) => doctor.doctorDepartment === department)
-
                 .map((doctor, index) => (
                   <option
                     value={`${doctor.firstName} ${doctor.lastName}`}

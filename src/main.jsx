@@ -1,4 +1,4 @@
-import { createContext, StrictMode, useState } from "react";
+import { createContext, useState } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
@@ -17,8 +17,4 @@ const AppWrapper = () => {
   );
 };
 
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <AppWrapper />
-  </StrictMode>
-);
+createRoot(document.getElementById("root")).render(<AppWrapper />);
