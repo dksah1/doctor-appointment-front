@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Input } from "./ui/input";
 
 const AppointmentForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -108,13 +109,13 @@ const AppointmentForm = () => {
         <h2>Appointment</h2>
         <form onSubmit={handleAppointment}>
           <div>
-            <input
+            <Input
               type="text"
               placeholder="First Name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
-            <input
+            <Input
               type="text"
               placeholder="Last Name"
               value={lastName}
@@ -122,13 +123,13 @@ const AppointmentForm = () => {
             />
           </div>
           <div>
-            <input
+            <Input
               type="text"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input
+            <Input
               type="number"
               placeholder="Mobile Number"
               value={phone}
