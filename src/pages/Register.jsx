@@ -41,6 +41,7 @@ const Register = () => {
       );
       toast.success(response.data.message);
       console.log("response of patient reg", response);
+      console.log("gender", gender);
 
       setIsAuthenticated(true);
       navigateTo("/");
@@ -107,6 +108,7 @@ const Register = () => {
             onChange={(e) => setDob(e.target.value)}
           />
           <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option value="Select">Select</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
